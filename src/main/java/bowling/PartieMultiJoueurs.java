@@ -5,20 +5,20 @@ import java.util.Map;
 
 public class PartieMultiJoueurs implements IPartieMultiJoueurs{
 	private Map<String, PartieMonoJoueur> lesParties;
-	private String[] nomsDesJoueurs;
+	private String[] nomsJoueurs;
 	private int nbJoueur;
 	private int tourJoueurNo;
 	
 	public PartieMultiJoueurs(){}
 	
 	private boolean estTerminer(){
-		return lesParties.get(nomsDesJoueurs[nbJoueur-1]).estTerminee();
+		return lesParties.get(nomsJoueurs[nbJoueur-1]).estTerminee();
 	}
 
 	public String toString(){
-		return "Prochain tir: joueur " + nomsDesJoueurs[tourJoueurNo] + ", tour n° " 
-			+ lesParties.get(nomsDesJoueurs[tourJoueurNo]).numeroTourCourant() 
-			+ ", boule n° " + lesParties.get(nomsDesJoueurs[tourJoueurNo]).numeroProchainLancer();
+		return "Prochain tir: joueur " + nomsJoueurs[tourJoueurNo] + ", tour n° " 
+			+ lesParties.get(nomsJoueurs[tourJoueurNo]).numeroTourCourant() 
+			+ ", boule n° " + lesParties.get(nomsJoueurs[tourJoueurNo]).numeroProchainLancer();
 	}
 
 	public String demarreNouvellePartie(String[] nomsDesJoueurs) throws IllegalArgumentException {
@@ -33,7 +33,7 @@ public class PartieMultiJoueurs implements IPartieMultiJoueurs{
 	
 	public String enregistreLancer(int nombreDeQuillesAbattues) throws IllegalStateException {
 		if (estTerminer()) throw  new IllegalStateException("La partie est terminée");
-		PartieMonoJoueur partieJoueur = lesParties.get(nomsDesJoueurs[tourJoueurNo]);
+		PartieMonoJoueur partieJoueur = lesParties.get(nomsJoueurs[tourJoueurNo]);
 		partieJoueur.enregistreLancer(nombreDeQuillesAbattues);
 		if (partieJoueur.numeroProchainLancer() == 1 || partieJoueur.estTerminee()) tourJoueurNo = (tourJoueurNo+1)%nbJoueur;
 		if (estTerminer()) return "Partie terminée";
